@@ -12,7 +12,7 @@ const getBulkImages = async ({ page }) => {
 
 	return await axios.get(
 		// `/?method=flickr.photos.getRecent&api_key=${key}&format=json&nojsoncallback=1&page=${page}&per_page=10&safe_search=3`,
-		`/?method=flickr.photos.search&api_key=${key}&format=json&nojsoncallback=1&tags=${tags}&page=${page}&per_page=10&safe_search=3`,
+		`/?method=flickr.photos.search&api_key=${key}&format=json&nojsoncallback=1&tags=Nature&page=${page}&per_page=10&safe_search=3`,
 		{ cancelToken: cancelToken.token }
 	)
 }
