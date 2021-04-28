@@ -1,0 +1,14 @@
+.searchContainer {
+	text-align: center;
+	position: relative;
+	padding-top: 1rem;
+}
+
+.title {
+	color: white;
+	font-size: 2rem;
+}
+
+.dropdown {
+	position: fixed !important;
+}

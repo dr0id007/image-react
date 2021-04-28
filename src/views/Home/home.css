@@ -1,0 +1,27 @@
+body {
+	margin: 0%;
+	padding: 0%;
+}
+
+.container {
+	padding: 1rem;
+	padding-top: 220px;
+	background-color: #eeeeee;
+}
+
+.top-banner {
+	position: fixed;
+	margin: 0%;
+	padding: 0%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	height: 150px;
+	z-index: 1;
+}
+
+.cardlist {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
