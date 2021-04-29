@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Card from '../../components/Card'
 import Search from '../../components/Search'
-import api from '../../api/images'
+import { getBulkImages, searchImage as searchImageApi } from '../../api/images'
 import Loader from '../../components/Loader'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { addLocalStorage } from '../../utils/helpers'
@@ -19,7 +19,7 @@ const Home = (props) => {
 	}
 
 	const fetchData = async () => {
-		const res = await api.getBulkImages({ page })
+		const res = await getBulkImages({ page })
 		if (res.data) {
 			setImagesList(res.data.photos.photo)
 			setPage(1)
@@ -34,7 +34,7 @@ const Home = (props) => {
 		if (search === '') {
 			fetchData()
 		} else {
-			const res = await api.searchImage({ tags: search, page })
+			const res = await searchImageApi({ tags: search, page })
 			if (res.data) {
 				if (res?.data?.photos?.photo.length > 0) {
 					setImagesList(res.data.photos.photo)
@@ -51,15 +51,15 @@ const Home = (props) => {
 
 	useEffect(() => {
 		fetchData()
-	}, [fetchData])
+	}, [])
 
 	useEffect(() => {
 		searchImage()
-	}, [search, searchImage])
+	}, [search])
 
 	const showMoreResults = async () => {
 		let s = search !== '' ? search : defaultValue
-		const res = await api.searchImage({ tags: s, page })
+		const res = await searchImageApi({ tags: s, page })
 		if (res.data) {
 			setImagesList(res.data.photos.photo)
 			const newList = imagesList.concat(res.data.photos.photo)

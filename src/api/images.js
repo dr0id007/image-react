@@ -4,7 +4,7 @@ axios.defaults.baseURL = process.env.REACT_APP_API_URL
 let key = process.env.REACT_APP_FLICKR_KEY
 let cancelToken
 
-const getBulkImages = async ({ page }) => {
+export const getBulkImages = async ({ page }) => {
 	if (typeof cancelToken != typeof undefined) {
 		cancelToken.cancel('cancelling the token1..')
 	}
@@ -16,7 +16,7 @@ const getBulkImages = async ({ page }) => {
 		{ cancelToken: cancelToken.token }
 	)
 }
-const searchImage = async ({ tags, page }) => {
+export const searchImage = async ({ tags, page }) => {
 	if (typeof cancelToken != typeof undefined) {
 		cancelToken.cancel('cancelling the token2..')
 	}
@@ -27,5 +27,3 @@ const searchImage = async ({ tags, page }) => {
 		{ cancelToken: cancelToken.token }
 	)
 }
-
-export default { getBulkImages, searchImage }
