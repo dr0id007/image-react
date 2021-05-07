@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Card from '../../components/Card'
 import Search from '../../components/Search'
-import { getBulkImages, searchImage as searchImageApi } from '../../api/images'
+import {
+	getBulkImages,
+	searchImage as searchImageApi,
+	getImageSize as getImageSizeApi
+} from '../../api/images'
 import Loader from '../../components/Loader'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { addLocalStorage } from '../../utils/helpers'
 import './home.css'
+import ImagePreview from '../../components/Preview'
 
 const Home = (props) => {
 	const [search, setSearch] = useState('')
 	const [imagesList, setImagesList] = useState([])
 	const [notfound, setNotFound] = useState(false)
+	const [preview, setPreview] = useState(false)
+	const [previewImage, setPreviewImage] = useState(false)
 	const [page, setPage] = useState(1)
 	let defaultValue = 'nature'
+	const didMount = useRef(false)
 
 	const saveSearchHistory = (value) => {
 		addLocalStorage(value)
@@ -53,8 +61,16 @@ const Home = (props) => {
 		fetchData()
 	}, [])
 
+	var timer = null
+
 	useEffect(() => {
-		searchImage()
+		if (!didMount.current) {
+			didMount.current = true
+		} else {
+			clearTimeout(timer)
+			timer = setTimeout(() => searchImage(), 1000)
+			// searchImage()
+		}
 	}, [search])
 
 	const showMoreResults = async () => {
@@ -71,8 +87,19 @@ const Home = (props) => {
 		}
 	}
 
+	const handlePreview = ({ src }) => {
+		setPreviewImage(src)
+		setPreview(true)
+	}
+
+	const handleClose = () => {
+		setPreview(false)
+	}
+
 	return (
 		<>
+			{preview ? <ImagePreview src={previewImage} handleClose={handleClose} /> : null}
+
 			<div className='top-banner'>
 				<Search setSearch={setSearch} />
 			</div>
@@ -90,9 +117,21 @@ const Home = (props) => {
 							</h4>
 						}
 					>
-						<div className='cardlist'>
+						<div className='image-grid' style={{ marginTop: '30px' }}>
 							{imagesList.map((image, index) => {
-								return <Card key={index} data={image} />
+								const { farm, server, id, secret } = image
+								return (
+									<Card
+										index={index}
+										key={index}
+										farm={farm}
+										server={server}
+										id={id}
+										secret={secret}
+										handlePreview={handlePreview}
+										updateLimit={imagesList.length - 9}
+									/>
+								)
 							})}
 						</div>
 					</InfiniteScroll>

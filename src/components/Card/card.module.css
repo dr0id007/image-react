@@ -1,3 +1,14 @@
 .card {
-	z-index: 0;
+	z-index: 1;
+}
+
+.btn {
+	border: none;
+	margin: 0%;
+	padding: 0%;
+	width: 100%;
+}
+
+.btn:hover {
+	cursor: pointer;
 }

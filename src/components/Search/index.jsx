@@ -22,7 +22,7 @@ const Search = ({ setSearch }) => {
 				onSearch={onSearch}
 				dropdownClassName={styles.dropdown}
 			>
-				<Input.Search size='large' placeholder='input here' enterButton />
+				<Input.Search size='large' onKeyDown={onSearch} placeholder='input here' enterButton />
 			</AutoComplete>
 		</div>
 	)

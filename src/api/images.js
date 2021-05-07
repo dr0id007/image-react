@@ -27,3 +27,15 @@ export const searchImage = async ({ tags, page }) => {
 		{ cancelToken: cancelToken.token }
 	)
 }
+
+export const getImageSize = async ({ id }) => {
+	if (typeof cancelToken != typeof undefined) {
+		cancelToken.cancel('cancelling the token2..')
+	}
+	cancelToken = axios.CancelToken.source()
+
+	return await axios.get(
+		`/?method=flickr.photos.getSizes&api_key=${key}&format=json&nojsoncallback=1&photo_id=${id}`,
+		{ cancelToken: cancelToken.token }
+	)
+}
